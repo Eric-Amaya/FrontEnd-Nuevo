@@ -151,44 +151,7 @@ export default function Produccion() {
               Buscar
             </button>
             <div ref={filterMenuRef} className="relative inline-block">
-              <button
-                onClick={handleFilterToggle}
-                className="bg-white hover:bg-gray-300 text-gray-800 px-4 py-2 rounded ml-24"
-              >
-                Filtrar por
-              </button>
-              {isFilterOpen && (
-                <div className="absolute right-0 mt-2 py-2 w-48 bg-white border rounded shadow-lg">
-                  <div className="px-4 py-2">
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={handleDateChange}
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-300 text-center w-full h-full cursor-pointer"
-                      placeholderText="Seleccionar fecha"
-                      dateFormat="dd-MM-yyyy"
-                    />
-                  </div>
-                  <button
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-300 w-full h-full"
-                    onClick={() => setSelectedFase(null)}
-                  >
-                    Fases
-                  </button>
-                  <button
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-300 w-full h-full"
-                    onClick={() => setSelectedMaterial(null)}
-                  >
-                    Materiales
-                  </button>
-                </div>
-              )}
             </div>
-            <button
-              className="bg-white hover:bg-gray-200 text-gray-800 px-4 py-2 rounded ml-40 mr-5"
-              onClick={handleRefresh}
-            >
-              Recargar
-            </button>
             <input type="file" onChange={handleFileUpload} className="hidden" />
             <button
               onClick={handleImportClick}

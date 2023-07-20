@@ -9,12 +9,15 @@ const MiPantalla = () => {
   const [rut, setRut] = useState('');
   const [correo, setCorreo] = useState('');
   const [mensaje, setMensaje] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes realizar la lógica para enviar los datos al servidor o hacer alguna otra acción
     // Por ejemplo, puedes hacer una validación antes de enviar los datos
-
     if (nombre && rut && correo) {
       if (validateEmail(correo)) {
         console.log('Datos enviados:', { nombre, rut, correo, mensaje });
@@ -27,21 +30,27 @@ const MiPantalla = () => {
     } else {
       alert('Por favor, completa todos los campos obligatorios.');
     }
-
-    const data_solicitud = {
-      nombre: nombre,
-      rut: rut,
-      correo: correo,
-      mensaje: mensaje,
-    };
+    fetch(
+      `http://localhost:3001/csv/ingresar-solicitud?nombre=${nombre}&rut=${rut}&correo=${correo}&mensaje=${mensaje}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Parsear la respuesta como JSON
+      })
+      .then((data) => {
+        const respuesta = data.resultado;
+        if(respuesta==true){
+          alert('solicitud enviada');
+        }
+        else{alert('solicitud no cargada');}// Aquí puedes manejar la respuesta JSON recibida desde el servidor
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
 
   };
-
-  const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
   const isButtonDisabled = () => {
     return !username ||!password};
